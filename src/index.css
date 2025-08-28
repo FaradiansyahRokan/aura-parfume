@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+
+.font-serif { font-family: "Cormorant Garamond", serif; }
+.font-sans { font-family: "Inter", sans-serif; }
+
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #fdfdfd;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.fade-in { animation: fadeIn 1s ease-out forwards; }
+
+@keyframes revealUp {
+  from { opacity: 0; transform: translateY(100%); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.hero-title span { display: inline-block; overflow: hidden; }
+.hero-title span span { display: inline-block; animation: revealUp 1s ease-out forwards; }
+
+.feature-card-animate {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+.feature-card-animate.is-visible { opacity: 1; transform: translateY(0); }
+
+.horizontal-scroll {
+  display: flex;
+  overflow-x: auto;
+  padding-bottom: 20px;
+  scrollbar-width: thin;
+  scrollbar-color: #000 #f1f1f1;
+}
+.horizontal-scroll::-webkit-scrollbar { height: 5px; }
+.horizontal-scroll::-webkit-scrollbar-track { background: #f1f1f1; }
+.horizontal-scroll::-webkit-scrollbar-thumb { background: #888; }
+.horizontal-scroll::-webkit-scrollbar-thumb:hover { background: #555; }
