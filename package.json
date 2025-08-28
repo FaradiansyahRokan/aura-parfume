@@ -2,7 +2,7 @@
   "name": "aura-parfum",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://faradiansyahrokan.github.io/aura-parfum/",
+  "homepage": "https://faradiansyahrokan.github.io/aura-parfume/",
   "type": "module",
   "scripts": {
     "dev": "vite",
