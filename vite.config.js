@@ -7,5 +7,5 @@ export default defineConfig({
   plugins: [react()
 , tailwindcss()
   ],
-  base: '/aura-parfum'
+  base: '/aura-parfum/'
 })
