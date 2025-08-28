@@ -1,12 +1,19 @@
 // src/components/pages/ConsultationPage.jsx
-import React, { useState } from 'react';
-import { askAI } from '../../API/aiService';
+import React, { useState, useEffect, useRef } from 'react';
+import { askAI } from '../../api/aiService';
 import Icon from '../Icon';
-
+import TypingIndicator from '../TypingIndicator';
+import AIMessage from './msg';
 const ConsultationPage = () => {
   const [messages, setMessages] = useState([{ sender: 'ai', text: 'Selamat datang di Aethera. Saya siap membantu Anda menemukan aroma yang sempurna.' }]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const chatEndRef = useRef(null);
+
+  // Fungsi untuk auto-scroll ke pesan terakhir
+  useEffect(() => {
+    chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -17,8 +24,8 @@ const ConsultationPage = () => {
     setIsLoading(true);
     const aiResponseText = await askAI(input);
     const aiMessage = { sender: 'ai', text: aiResponseText };
+    setIsLoading(false); // Pindahkan ini ke sebelum setMessages AI
     setMessages(prev => [...prev, aiMessage]);
-    setIsLoading(false);
   };
 
   return (
@@ -28,14 +35,28 @@ const ConsultationPage = () => {
           <h2 className="text-2xl font-semibold font-serif text-black text-center tracking-widest">AI SOMMELIER</h2>
         </div>
         <div className="flex-1 p-6 overflow-y-auto space-y-4 bg-gray-50/50 font-sans">
-          {messages.map((msg, index) => (
-            <div key={index} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-xs lg:max-w-md px-4 py-3 ${msg.sender === 'user' ? 'bg-black text-white' : 'bg-white text-black border border-gray-300'}`}>
-                <p className="text-base">{msg.text}</p>
-              </div>
+          {messages.map((msg, index) => {
+            if (msg.sender === 'user') {
+              return (
+                <div key={index} className="flex justify-end">
+                  <div className="max-w-xs lg:max-w-md px-4 py-3 bg-black text-white">
+                    <p className="text-base">{msg.text}</p>
+                  </div>
+                </div>
+              );
+            }
+            // Gunakan komponen AIMessage untuk pesan AI
+            return <AIMessage key={index} text={msg.text} />;
+          })}
+          
+          {/* Ganti loading text dengan komponen TypingIndicator */}
+          {isLoading && (
+            <div className="flex justify-start">
+              <TypingIndicator />
             </div>
-          ))}
-          {isLoading && <div className="flex justify-start"><div className="bg-white text-black px-4 py-3 border border-gray-300">...</div></div>}
+          )}
+          {/* Ref untuk auto-scroll */}
+          <div ref={chatEndRef} />
         </div>
         <form onSubmit={handleSendMessage} className="p-4 border-t-2 border-black flex items-center bg-white">
           <input type="text" value={input} onChange={(e) => setInput(e.target.value)} placeholder="Katakan sesuatu..." className="flex-1 bg-gray-100 border border-gray-300 text-black py-3 px-5 text-base focus:outline-none focus:border-black transition-colors font-sans" disabled={isLoading} />
