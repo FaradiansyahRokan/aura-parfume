@@ -1,5 +1,5 @@
 export const askAI = async (prompt) => {
-  const API_URL = "  https://8a9e78a3041f.ngrok-free.app/chat"; 
+  const API_URL = "https://56298c6d0aba.ngrok-free.app/chat";
   try {
     const response = await fetch(API_URL, {
       method: 'POST',

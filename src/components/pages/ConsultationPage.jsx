@@ -5,7 +5,7 @@ import Icon from '../Icon';
 import TypingIndicator from '../TypingIndicator';
 import AIMessage from './msg';
 const ConsultationPage = () => {
-  const [messages, setMessages] = useState([{ sender: 'ai', text: 'Selamat datang di Aethera. Saya siap membantu Anda menemukan aroma yang sempurna.' }]);
+  const [messages, setMessages] = useState([{ sender: 'ai', text: 'Selamat datang di Aethera. Saya Aura siap membantu Anda menemukan aroma yang sempurna.' }]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const chatEndRef = useRef(null);
